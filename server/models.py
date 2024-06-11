@@ -12,6 +12,25 @@ class Author(db.Model):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     # Add validators 
+    @validates('name', 'phone_number')
+    def validate_name(self, key, value):
+        author_objects = Author.query.all()
+        author_names = [author_object.name for author_object in author_objects]
+        if key == 'name':
+            if value == '':
+                raise ValueError('Name cannot be empty.')
+            elif value in author_names:
+                raise ValueError('Name must be unique.')
+        elif key == 'phone_number':
+            if len(value) != 10:
+                raise ValueError('Number issues.')
+        return value
+    
+    # @validates('phone_number')
+    # def validate_number(self, key, number_value):
+    #     if number_value != 10:
+    #         raise ValueError('Phone number must be 10 digits.')
+    #     return number_value
 
     def __repr__(self):
         return f'Author(id={self.id}, name={self.name})'

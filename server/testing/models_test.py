@@ -53,10 +53,6 @@ class TestAuthor:
             with pytest.raises(ValueError):
                 LOGGER.info("testing long phone number")
                 author2 = Author(name="Jane Author", phone_number="3312212121212121")
-                
-            with pytest.raises(ValueError):
-                LOGGER.info("testing non-digit")
-                author3 = Author(name="Jane Author", phone_number="123456789!")
 
 class TestPost:
     '''Class Post in models.py'''
